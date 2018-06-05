@@ -17,6 +17,8 @@ var nbclients = 0;
 var allchatters=0;
 io.on("connection", function (socket) {
     allchatters++;
+    // on envoie le nombre de chatters a chaque client
+    io.sockets.emit("get_nbusers", {nbusers: allchatters});
     console.log("connectés: " + allchatters);
     //Si le client nous envoie un message on le renvoie à tous les clients pour l'afficher
     socket.on("message", function (data) {
@@ -27,6 +29,7 @@ io.on("connection", function (socket) {
     });
     socket.on('disconnect', function () {
         allchatters--;
-        console.log("cpnnectés: " + allchatters);
+        io.sockets.emit("get_nbusers", {nbusers: allchatters});
+        console.log("connectés: " + allchatters);
     });
 });

@@ -26,6 +26,11 @@ $(document).ready(function () {
             $("#textchat").val("");
         }
     }
+    //lorsque le serveur nous envoie le nombre d'utilisateurs on l'affiche
+    socket.on("get_nbusers", function (data) {
+        console.log(data.nbusers);
+        $("#nbusers").html("Utilisateurs connectés: "+data.nbusers);
+    });
     //lorsque le serveur nous envoie un nouveau message on l'affiche
     socket.on("message", function (data) {
         console.log(data.message);
