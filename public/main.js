@@ -18,10 +18,13 @@ $(document).ready(function () {
     });
 
     function sendMessage() {
+        
         if ($("#textchat").val() != "") {
+            //on remplace les < et > par leur code HTML histoire de ne pas pouvoir injecter du code
+            var textchat = $("#textchat").val().replace(/</g, "&lt;").replace(/>/g, "&gt;");
             socket.emit("message", {
                 pseudo: $("#textpseudo").val(),
-                message: $("#textchat").val()
+                message: textchat
             });
             $("#textchat").val("");
         }
