@@ -1,0 +1,12 @@
+h1 {
+    color:red;
+}
+#chatlog{
+    border-style: groove;
+    height: 450px;
+    width: 600px;
+    display:flex; 
+    justify-content:flex-end;
+    flex-direction: column;
+    overflow: hidden;
+}
