@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // on se connecte au serveur 
-    var socket = io.connect("http://127.0.0.1:8080");
+    var socket = io.connect("http://http://hidden-bayou-91192.herokuapp.com");
     $("#divpseudo").show();
     $("#divtext").hide();
     $("#sendpseudo").on("click", function () {
