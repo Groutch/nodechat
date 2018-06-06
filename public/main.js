@@ -38,7 +38,7 @@ $(document).ready(function () {
     socket.on("message", function (data) {
         console.log(data.message);
         //un regex pour voir si c'est un lien vers une image: 
-        var regex = new RegExp("\.(jpeg|jpg|bmp|?)$", "i");
+        var regex = new RegExp("\.(jpeg|jpg|bmp|png?)$", "i");
         
         if (data.message.match(regex)) {
              $.get(data.message)
