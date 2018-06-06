@@ -38,13 +38,21 @@ $(document).ready(function () {
     socket.on("message", function (data) {
         console.log(data.message);
         //un regex pour voir si c'est un lien vers une image: 
-        $.get(data.message)
+        var regex = new RegExp("\.(jpeg|jpg|bmp|?)$", "i");
+        
+        if (data.message.match(regex)) {
+             $.get(data.message)
             .done(function () {
                 var messageFormated = "<img src='" + data.message + "' alt='" + data.message + "'>";
                 $("#chatlog").append("<p>[" + data.heure + "] " + data.pseudo + ": " + messageFormated + "</p>")
             }).fail(function () {
                 var messageFormated = data.message;
                 $("#chatlog").append("<p>[" + data.heure + "] " + data.pseudo + ": " + messageFormated + "</p>")
-            })
+            }) 
+        } else {
+            var messageFormated = data.message;
+            $("#chatlog").append("<p>[" + data.heure + "] " + data.pseudo + ": " + messageFormated + "</p>")
+        }
+        
     });
 });
