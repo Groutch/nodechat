@@ -1,7 +1,6 @@
 //on utilise express
 const express = require("express");
 var moment = require('moment');
-moment = moment.locale("fr");
 const app = express();
 //on utilise le moteur de template ejs
 app.set("view engine", "ejs");
@@ -16,22 +15,29 @@ server = app.listen(process.env.PORT || 8080);
 const io = require("socket.io")(server);
 //si un client se connecte...
 var nbclients = 0;
-var allchatters=0;
+var allchatters = 0;
 io.on("connection", function (socket) {
     allchatters++;
     // on envoie le nombre de chatters a chaque client
-    io.sockets.emit("get_nbusers", {nbusers: allchatters});
+    io.sockets.emit("get_nbusers", {
+        nbusers: allchatters
+    });
     console.log("connectés: " + allchatters);
     //Si le client nous envoie un message on le renvoie à tous les clients pour l'afficher
+
+    moment.locale("fr");
     socket.on("message", function (data) {
-        io.sockets.emit("message", { heure: moment().format("HH:mm:ss"),
+        io.sockets.emit("message", {
+            heure: moment().format("HH:mm:ss"),
             pseudo: data.pseudo,
             message: data.message
         });
     });
     socket.on('disconnect', function () {
         allchatters--;
-        io.sockets.emit("get_nbusers", {nbusers: allchatters});
+        io.sockets.emit("get_nbusers", {
+            nbusers: allchatters
+        });
         console.log("connectés: " + allchatters);
     });
 });
