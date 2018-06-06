@@ -25,7 +25,7 @@ io.on("connection", function (socket) {
     console.log("connectés: " + allchatters);
     //Si le client nous envoie un message on le renvoie à tous les clients pour l'afficher
 
-    moment.locale("fr");
+    moment().locale("fr");
     socket.on("message", function (data) {
         io.sockets.emit("message", {
             heure: moment().format("HH:mm:ss"),
