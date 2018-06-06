@@ -1,6 +1,6 @@
 //on utilise express
 const express = require("express");
-var moment = require('moment');
+var moment = require('moment-timezone');
 const app = express();
 //on utilise le moteur de template ejs
 app.set("view engine", "ejs");
@@ -25,10 +25,10 @@ io.on("connection", function (socket) {
     console.log("connectés: " + allchatters);
     //Si le client nous envoie un message on le renvoie à tous les clients pour l'afficher
 
-    moment().locale("fr");
+    //moment().locale("fr");
     socket.on("message", function (data) {
         io.sockets.emit("message", {
-            heure: moment().format("HH:mm:ss"),
+            heure: moment().tz("Europe/Paris").format("HH:mm:ss"),
             pseudo: data.pseudo,
             message: data.message
         });
