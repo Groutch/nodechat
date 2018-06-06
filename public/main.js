@@ -37,6 +37,6 @@ $(document).ready(function () {
     //lorsque le serveur nous envoie un nouveau message on l'affiche
     socket.on("message", function (data) {
         console.log(data.message);
-        $("#chatlog").append("<p>" + data.pseudo + ": " + data.message + "</p>")
+        $("#chatlog").append("<p>["+data.heure+"] " + data.pseudo + ": " + data.message + "</p>")
     });
 });

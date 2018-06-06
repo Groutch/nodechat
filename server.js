@@ -17,20 +17,18 @@ const io = require("socket.io")(server);
 var nbclients = 0;
 var allchatters=0;
 io.on("connection", function (socket) {
-    console.log(moment().format());
     allchatters++;
     // on envoie le nombre de chatters a chaque client
     io.sockets.emit("get_nbusers", {nbusers: allchatters});
     console.log("connectés: " + allchatters);
     //Si le client nous envoie un message on le renvoie à tous les clients pour l'afficher
     socket.on("message", function (data) {
-        io.sockets.emit("message", {
+        io.sockets.emit("message", { heure: moment().format("H:mm:ss"),
             pseudo: data.pseudo,
             message: data.message
         });
     });
     socket.on('disconnect', function () {
-        console.log(moment().format());
         allchatters--;
         io.sockets.emit("get_nbusers", {nbusers: allchatters});
         console.log("connectés: " + allchatters);
