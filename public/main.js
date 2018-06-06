@@ -1,7 +1,7 @@
 $(document).ready(function () {
     // on se connecte au serveur 
     //var socket = io.connect("http://127.0.0.1:8080");
-    var socket=io();
+    var socket = io();
     $("#divpseudo").show();
     $("#divtext").hide();
     $("#sendpseudo").on("click", function () {
@@ -18,7 +18,7 @@ $(document).ready(function () {
     });
 
     function sendMessage() {
-        
+
         if ($("#textchat").val() != "") {
             //on remplace les < et > par leur code HTML histoire de ne pas pouvoir injecter du code
             var textchat = $("#textchat").val().replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -32,11 +32,19 @@ $(document).ready(function () {
     //lorsque le serveur nous envoie le nombre d'utilisateurs on l'affiche
     socket.on("get_nbusers", function (data) {
         console.log(data.nbusers);
-        $("#nbusers").html("Utilisateurs connectés: "+data.nbusers);
+        $("#nbusers").html("Utilisateurs connectés: " + data.nbusers);
     });
     //lorsque le serveur nous envoie un nouveau message on l'affiche
     socket.on("message", function (data) {
         console.log(data.message);
-        $("#chatlog").append("<p>["+data.heure+"] " + data.pseudo + ": " + data.message + "</p>")
+        //un regex pour voir si c'est un lien vers une image: 
+        $.get(data.message)
+            .done(function () {
+                var messageFormated = "<img src='" + data.message + "' alt='" + data.message + "'>";
+                $("#chatlog").append("<p>[" + data.heure + "] " + data.pseudo + ": " + messageFormated + "</p>")
+            }).fail(function () {
+                var messageFormated = data.message;
+                $("#chatlog").append("<p>[" + data.heure + "] " + data.pseudo + ": " + messageFormated + "</p>")
+            })
     });
 });

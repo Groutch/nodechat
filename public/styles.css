@@ -10,3 +10,8 @@ h1 {
     flex-direction: column;
     overflow: hidden;
 }
+
+#chatlog img {
+    max-width: 50px;
+    max-height: 50px;
+}
