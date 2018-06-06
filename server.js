@@ -1,5 +1,6 @@
 //on utilise express
 const express = require("express");
+var moment = require('moment');
 const app = express();
 //on utilise le moteur de template ejs
 app.set("view engine", "ejs");
@@ -16,6 +17,7 @@ const io = require("socket.io")(server);
 var nbclients = 0;
 var allchatters=0;
 io.on("connection", function (socket) {
+    console.log(moment().format());
     allchatters++;
     // on envoie le nombre de chatters a chaque client
     io.sockets.emit("get_nbusers", {nbusers: allchatters});
@@ -28,6 +30,7 @@ io.on("connection", function (socket) {
         });
     });
     socket.on('disconnect', function () {
+        console.log(moment().format());
         allchatters--;
         io.sockets.emit("get_nbusers", {nbusers: allchatters});
         console.log("connectés: " + allchatters);
