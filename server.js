@@ -1,6 +1,7 @@
 //on utilise express
 const express = require("express");
 var moment = require('moment');
+moment.local("fr");
 const app = express();
 //on utilise le moteur de template ejs
 app.set("view engine", "ejs");
