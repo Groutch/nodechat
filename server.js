@@ -1,7 +1,9 @@
 //on utilise express
 const express = require("express");
-var moment = require('moment-timezone');
 const app = express();
+//on utilise moment avec les timezone
+const moment = require('moment-timezone');
+
 //on utilise le moteur de template ejs
 app.set("view engine", "ejs");
 //middleware: on indique que les fichiers statiques (css, stripts js...) sont dans le dossier public
