@@ -43,7 +43,7 @@ $(document).ready(function () {
         if (data.message.match(regex)) {
              $.get(data.message)
             .done(function () {
-                var messageFormated = "<img src='" + data.message + "' alt='" + data.message + "'>";
+                var messageFormated = "<a href='" + data.message + "'><img src='" + data.message + "' alt='" + data.message + "'></a>";
                 $("#chatlog").append("<p>[" + data.heure + "] " + data.pseudo + ": " + messageFormated + "</p>")
             }).fail(function () {
                 var messageFormated = data.message;
