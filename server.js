@@ -22,7 +22,7 @@ var nbclients = 0;
 var allchatters = 0;
 io.on("connection", function (socket) {
     //on envoie l'historique des messages
-    console.log(typeof history);
+    //console.log(typeof history);
     for(var i=0; i < history.posts.length;i++){
         socket.emit("message", {
             heure: history.posts[i].heure,
@@ -51,7 +51,7 @@ io.on("connection", function (socket) {
             pseudo: data.pseudo,
             message: data.message
         });
-        console.log(history.posts);
+        //console.log(history.posts);
         // on ecrit ce tableau dans le json
         fs.writeFile('history.json',JSON.stringify(history), function (err) {
   if (err) return console.log(err);
