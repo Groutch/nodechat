@@ -18,7 +18,6 @@ $(document).ready(function () {
     });
 
     function sendMessage() {
-
         if ($("#textchat").val() != "") {
             //on remplace les < et > par leur code HTML histoire de ne pas pouvoir injecter du code
             var textchat = $("#textchat").val().replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -29,17 +28,18 @@ $(document).ready(function () {
             $("#textchat").val("");
         }
     }
+    
     //lorsque le serveur nous envoie le nombre d'utilisateurs on l'affiche
     socket.on("get_nbusers", function (data) {
         console.log(data.nbusers);
         $("#nbusers").html("Utilisateurs connectés: " + data.nbusers);
     });
+    
     //lorsque le serveur nous envoie un nouveau message on l'affiche
     socket.on("message", function (data) {
         console.log(data.message);
         //un regex pour voir si c'est un lien vers une image: 
         var regex = new RegExp("\.(jpeg|jpg|bmp|png?)$", "i");
-        
         if (data.message.match(regex)) {
              $.get(data.message)
             .done(function () {
@@ -51,8 +51,9 @@ $(document).ready(function () {
             }) 
         } else {
             var messageFormated = data.message;
-            $("#chatlog").append("<p>[" + data.heure + "] " + data.pseudo + ": " + messageFormated + "</p>")
+            $("#chatlog").append("<p class='mess'>[" + data.heure + "] " + data.pseudo + ": " + messageFormated + "</p>")
         }
         
+        $("#chatlog").scrollTop($("#chatlog").height());
     });
 });
