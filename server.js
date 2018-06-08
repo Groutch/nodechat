@@ -18,11 +18,11 @@ server = app.listen(process.env.PORT || 8080);
 //on utilise socket.io
 const io = require("socket.io")(server);
 //si un client se connecte...
-var nbclients = 0;
 var allchatters = 0;
+var listeClients={};
 io.on("connection", function (socket) {
-    //on envoie l'historique des messages
-    //console.log(typeof history);
+    console.log(listeClients);
+    //on envoie l'historique des messages au client qui demande (socket pas sockets)
     for(var i=0; i < history.posts.length;i++){
         socket.emit("message", {
             heure: history.posts[i].heure,
@@ -36,9 +36,17 @@ io.on("connection", function (socket) {
         nbusers: allchatters
     });
     console.log("connectés: " + allchatters);
+    
+    //on envoie la liste des users
+    io.sockets.emit("getlistusers",listeClients);
+    
+    
+    //lorsqu'on reçoit un username, on le link a l'id du socket
+    socket.on("sendusername", function(data){
+        listeClients[socket.id]=data;
+        io.sockets.emit("getlistusers",listeClients);
+    });
     //Si le client nous envoie un message on le renvoie à tous les clients pour l'afficher
-
-    //moment().locale("fr");
     socket.on("message", function (data) {
         io.sockets.emit("message", {
             heure: moment().tz("Europe/Paris").format("HH:mm:ss"),
@@ -51,7 +59,6 @@ io.on("connection", function (socket) {
             pseudo: data.pseudo,
             message: data.message
         });
-        //console.log(history.posts);
         // on ecrit ce tableau dans le json
         fs.writeFile('history.json',JSON.stringify(history), function (err) {
   if (err) return console.log(err);
@@ -64,5 +71,7 @@ io.on("connection", function (socket) {
             nbusers: allchatters
         });
         console.log("connectés: " + allchatters);
+        delete listeClients[socket.id];
+        io.sockets.emit("getlistusers",listeClients);
     });
 });

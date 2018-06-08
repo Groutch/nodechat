@@ -4,18 +4,34 @@ h1 {
 #chatlog{
     border-style: groove;
     height: 450px;
-    width: 600px;
+    width: 650px;
     /display:flex; 
     /justify-content:flex-end;
     /flex-direction: column;
-    overflow: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /flex-wrap: wrap;
 }
 
-#chatlog .mess{
-    
+.mess{
+    width: 630px;
+    /border-style: groove;
+    word-wrap: break-word;
 }
 
 #chatlog img {
     max-width: 100px;
     max-height: 100px;
+}
+
+#listusers {
+    width:250px;
+    height: 450px;
+    background-color: darkgray;
+}
+#listusers p{
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
