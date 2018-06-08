@@ -53,7 +53,6 @@ $(document).ready(function () {
             var messageFormated = data.message;
             $("#chatlog").append("<p class='mess'>[" + data.heure + "] " + data.pseudo + ": " + messageFormated + "</p>")
         }
-        
-        $("#chatlog").scrollTop($("#chatlog").height());
+        $("#chatlog").stop().animate({ scrollTop: $("#chatlog")[0].scrollHeight}, 1000);
     });
 });
